@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class GeneticAlgorithm {
     int Generation = 1000;//进化代数
-    int initSpeciesNum = 150;//初始种群个数
+    int initSpeciesNum = 200;//初始种群个数
     float mutationProbability=0.3f;//变异概率
     int talentNum = 5; //将最大适应度物种复制talentNum个
     int facilitiesCount;//facility个数
@@ -27,7 +27,6 @@ public class GeneticAlgorithm {
         //初始种群生成
         long startTime=System.currentTimeMillis();
         createBeginningSpecies();
-//        System.out.println("第0代: SpeciesNum: "+ species.size()+ "  最低cost： " + calCost(species.get(getBest(AllCost))) + "  最好适应值个体："+ species.get(getBest(AllCost)) );
         for(int i=1;i<=Generation;i++){
             //选择
             select(species);
@@ -35,8 +34,6 @@ public class GeneticAlgorithm {
             cross(species);
             //变异
             mutate(species);
-//            System.out.println(AllCost);
-//            System.out.println("第"+ i +"代: SpeciesNum: "+ species.size() + "  最低cost： " + calCost(species.get(getBest(AllCost)))+ "  最好适应值个体："+ species.get(getBest(AllCost)) );
         }
         int bestIndex = getBest(AllCost);
         costSum = AllCost.get(bestIndex);
@@ -53,7 +50,6 @@ public class GeneticAlgorithm {
 
     //随机生成初始种群，坏的个体舍去，重新生成
     private void createBeginningSpecies(){
-//        System.out.println("init species...");
         GreedyAlgorithm greedy = new GreedyAlgorithm();
         GreedyResult greedyResult = greedy.Greedy(facilities,customers);
         List<Integer> greedyR = new ArrayList<>();
@@ -62,8 +58,6 @@ public class GeneticAlgorithm {
             greedyR.add(greedyResult.customersToFacilities[i]);
         }
         species.add(greedyR);
-//        System.out.println("Greedy Result .." + greedyR);
-//        System.out.println("Greedy Result cost..." + calCost(greedyR));
         for(int i=1;i<initSpeciesNum;i++){
             int[][] tempFacilities = copyFacility();
             List<Integer> createIndividual = new ArrayList<>();
@@ -76,18 +70,12 @@ public class GeneticAlgorithm {
                 tempFacilities[s][0] -= customers[j][0];
                 createIndividual.add(s);
             }
-//            //若为无效个体，重新生成
-//            if(calCost(createIndividual) == 888888){
-//                i--;
-//                continue;
-//            }
+
             species.add(createIndividual);
             AllCost.add(calCost(createIndividual));
-//            System.out.println(createIndividual);
         }
         //更新适应值表AllFitness
         calAllFitness();
-//        System.out.println(AllFitness);
     }
 
 
@@ -215,10 +203,7 @@ public class GeneticAlgorithm {
                     species.add(mutateOffspring);
                     AllCost.add(calCost(mutateOffspring));
                     calAllFitness();
-//                    System.out.println("当前种群里最坏个体：" + species.get(getWorst(AllCost)) + "的cost" + AllCost.get(getWorst(AllCost)));
                     eliminateWorstIndividual();
-//                    System.out.println("变异个体：" + mutateOffspring + " 该个体的cost：" + calCost(mutateOffspring) + "种群大小" + species.size());
-//                    System.out.println("当前种群里最坏个体：" + species.get(getWorst(AllCost)) + "的cost" + AllCost.get(getWorst(AllCost)));
                 }
             }
             i++;

@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ public class main {
 
     public static void main(String args[]) {
         System.out.println("\n----------------------------");
-        System.out.println("--------  GA算法   ---------");
+        System.out.println("--------  贪心算法   ---------");
         for (int i = 0; i <= 70; i++) {
             File file = new File("instances/p" + (i + 1));
             fileList.add(file);
@@ -26,6 +27,7 @@ public class main {
             //贪心
             GreedyAlgorithm greedy = new GreedyAlgorithm();
 
+            //以下为获取并输出结果部分
             GreedyResult greedyResult = greedy.Greedy(facility[i], customer[i]);
             resultCostGreedy[i] = greedyResult.cost;
             long time=greedyResult.time;
@@ -44,18 +46,34 @@ public class main {
             System.out.println();
         }
         System.out.println("----------------------------");
-        for (int i = 0; i <= 70; i++) {
-            System.out.println("P" + (i + 1) + ": GreedyResult：" + resultCostGreedy[i] + "    Time：" + resultTimeGreedy[i]);
-        }
 
+        //输出csv文件
+        createCSVFile createCSVFile = new createCSVFile();
+        List<Result> results = new ArrayList<>();
+        String[] header = {"","Result","Time(ms)"};
+        String[] properties = {"id","costSum","costTime"};
+        for (int i = 0; i <= 70; i++) {
+            Result result = new Result();
+            result.setId("P"+(i+1));
+            result.setCostSum(resultCostGreedy[i]);
+            result.setCostTime(resultTimeGreedy[i]);
+            results.add(result);
+        }
+        try {
+            createCSVFile.exportCsv("GreedyResult",header,properties,results);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("\n\n\n----------------------------");
         System.out.println("--------  GA算法   ---------");
 
-
-
         for(int j=0;j<=70;j++){
             GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
+
+            //以下为获取并输出结果部分
             GAResult gaResult = geneticAlgorithm.GeneticAlgorithm(facility[j], customer[j]);
             resultCostGenetic[j] = gaResult.cost;
             resultTimeGenetic[j] = gaResult.time;
@@ -73,8 +91,23 @@ public class main {
             System.out.println();
         }
         System.out.println("----------------------------");
+
+
+        //输出csv文件
+        results.clear();
         for (int j = 0; j <= 70; j++) {
-            System.out.println("P" + (j + 1) + ": GAResult：" + resultCostGenetic[j] + "    Time：" + resultTimeGenetic[j]);
+            Result result = new Result();
+            result.setId("P"+(j+1));
+            result.setCostSum(resultCostGenetic[j]);
+            result.setCostTime(resultTimeGenetic[j]);
+            results.add(result);
+        }
+        try {
+            createCSVFile.exportCsv("GAResult",header,properties,results);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 
