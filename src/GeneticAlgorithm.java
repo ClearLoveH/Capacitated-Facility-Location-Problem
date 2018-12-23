@@ -6,8 +6,9 @@ import java.util.Random;
 public class GeneticAlgorithm {
     int Generation = 1000;//进化代数
     int initSpeciesNum = 200;//初始种群个数
-    float mutationProbability=0.3f;//变异概率
-    int talentNum = 5; //将最大适应度物种复制talentNum个
+    float mutationProbability=0.1f;//变异概率
+    float crossProbability=0.9f;//交叉概率
+    int talentNum = 10; //将最大适应度物种复制talentNum个
     int facilitiesCount;//facility个数
     int customersCount;//消费者个数
     static int INVALID = 888888; //判断产生的新个体是否可存活
@@ -127,35 +128,47 @@ public class GeneticAlgorithm {
         List<Integer> nextGenerationCost = new ArrayList<>();
         while (q<species.size() && q+1<species.size()){
             Random rand=new Random();
-            //在序列上随机取一个位置交叉
-            int crossIndex=rand.nextInt(customersCount-1);
-            List<Integer> offspring1 = new ArrayList<>();
-            List<Integer> offspring2 = new ArrayList<>();
-            List<Integer>  parent1 = species.get(q);
-            List<Integer>  parent2 = species.get(q+1);
-            for(int i=0;i<crossIndex;i++){
-                offspring1.add(parent1.get(i));
-                offspring2.add(parent2.get(i));
-            }
-            for(int i=crossIndex;i<customersCount;i++){
-                offspring1.add(parent2.get(i));
-                offspring2.add(parent1.get(i));
-            }
-            if(calCost(offspring1)!=INVALID){
-                nextGeneration.add(offspring1);
-                nextGenerationCost.add(calCost(offspring1));
+
+            float rFloat = rand.nextFloat();
+            //交叉率
+            if(rFloat < crossProbability){
+                //在序列上随机取一个位置交叉
+                int crossIndex=rand.nextInt(customersCount-1);
+                List<Integer> offspring1 = new ArrayList<>();
+                List<Integer> offspring2 = new ArrayList<>();
+                List<Integer>  parent1 = species.get(q);
+                List<Integer>  parent2 = species.get(q+1);
+                for(int i=0;i<crossIndex;i++){
+                    offspring1.add(parent1.get(i));
+                    offspring2.add(parent2.get(i));
+                }
+                for(int i=crossIndex;i<customersCount;i++){
+                    offspring1.add(parent2.get(i));
+                    offspring2.add(parent1.get(i));
+                }
+                if(calCost(offspring1)!=INVALID){
+                    nextGeneration.add(offspring1);
+                    nextGenerationCost.add(calCost(offspring1));
+                }
+                else {
+                    nextGeneration.add(parent1);
+                    nextGenerationCost.add(calCost(parent1));
+                }
+                if(calCost(offspring2)!=INVALID){
+                    nextGeneration.add(offspring2);
+                    nextGenerationCost.add(calCost(offspring2));
+                }
+                else {
+                    nextGeneration.add(parent2);
+                    nextGenerationCost.add(calCost(parent2));
+                }
+
             }
             else {
-                nextGeneration.add(parent1);
-                nextGenerationCost.add(calCost(parent1));
-            }
-            if(calCost(offspring2)!=INVALID){
-                nextGeneration.add(offspring2);
-                nextGenerationCost.add(calCost(offspring2));
-            }
-            else {
-                nextGeneration.add(parent2);
-                nextGenerationCost.add(calCost(parent2));
+                nextGeneration.add(species.get(q));
+                nextGenerationCost.add(AllCost.get(q));
+                nextGeneration.add(species.get(q+1));
+                nextGenerationCost.add(AllCost.get(q+1));
             }
             q+=2;
         }

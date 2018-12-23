@@ -7,7 +7,8 @@ public class SimulatedAnnealing {
     int customersCount;//消费者个数`
     int[][] facilities;
     int[][] customers;
-    double Temperature = 50;//初温
+    int Iteration = 200;
+    double Temperature = 150;//初温
     double EPS=1e-6;   //温度下届
     double coolingCoefficient = 0.99;
     static int INVALID = 888888; //判断产生的新解是否可用
@@ -23,26 +24,27 @@ public class SimulatedAnnealing {
         long startTime=System.currentTimeMillis();
         int costCurrent = 0;
 
-//        //使用贪心算法来求初值
-//        GreedyAlgorithm greedy = new GreedyAlgorithm();
-//        GreedyResult greedyResult = greedy.Greedy(facilities,customers);
+        //使用贪心算法来求初值
+        GreedyAlgorithm greedy = new GreedyAlgorithm();
+        GreedyResult greedyResult = greedy.Greedy(facilities,customers);
         List<Integer> initList = new ArrayList<>();
-//        for(int i=0;i<greedyResult.customersToFacilities.length;i++){
-//            initList.add(greedyResult.customersToFacilities[i]);
-//        }
-
-        for(int i=1;i<customersCount;i++){
-            int[][] tempFacilities1 = copyFacility();
-            for(int j=0;j<customersCount;j++){
-                Random r = new Random();
-                int s = r.nextInt(facilitiesCount);
-                while (tempFacilities1[s][0] < customers[j][0]){
-                    s = (s+1)%facilitiesCount;
-                }
-                tempFacilities1[s][0] -= customers[j][0];
-                initList.add(s);
-            }
+        for(int i=0;i<greedyResult.customersToFacilities.length;i++){
+            initList.add(greedyResult.customersToFacilities[i]);
         }
+
+        //使用随机解产生初值
+//        for(int i=1;i<customersCount;i++){
+//            int[][] tempFacilities1 = copyFacility();
+//            for(int j=0;j<customersCount;j++){
+//                Random r = new Random();
+//                int s = r.nextInt(facilitiesCount);
+//                while (tempFacilities1[s][0] < customers[j][0]){
+//                    s = (s+1)%facilitiesCount;
+//                }
+//                tempFacilities1[s][0] -= customers[j][0];
+//                initList.add(s);
+//            }
+//        }
 
         costCurrent = calCost(initList);
 
@@ -50,7 +52,7 @@ public class SimulatedAnnealing {
 //        int count = 0;//降温次数
         while (Temperature > EPS){
             int count = 0;// 迭代次数
-            while (count < 100){
+            while (count < Iteration){
                 List<Integer> tempList = new ArrayList<>();
                 tempList.addAll(initList);
                 qwer++;

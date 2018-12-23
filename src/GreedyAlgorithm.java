@@ -5,7 +5,7 @@ public class GreedyAlgorithm {
     int[][] customers;
     public GreedyAlgorithm(){}
 
-    //贪心算法，优先选择当前满足要求的facility中cost最小的。
+    //贪心算法，优先选择当前满足要求的facility中assignment cost最小的。
     public GreedyResult Greedy(int[][] facilities, int[][] customers){
         this.facilities = facilities;
         this.customers = customers;
@@ -26,16 +26,19 @@ public class GreedyAlgorithm {
                 if(tempFacilities[j][0]<customers[i][0]){
                     continue;
                 }
-                if(facilitiesStatus[j]==0){
-                    currentCost += tempFacilities[j][1];
-                }
+//                if(facilitiesStatus[j]==0){
+//                    currentCost += tempFacilities[j][1];
+//                }
                 currentCost += customers[i][j+1];
                 if(currentCost <= minCost){
                     minCost = currentCost;
                     selectIndex = j;
                 }
             }
-            facilitiesStatus[selectIndex] = 1;
+            if(facilitiesStatus[selectIndex] == 0){
+                facilitiesStatus[selectIndex] = 1;
+                costSum += tempFacilities[selectIndex][1];
+            }
             customersToFacilities[i] = selectIndex;
             tempFacilities[selectIndex][0] -= customers[i][0];
             costSum += minCost;

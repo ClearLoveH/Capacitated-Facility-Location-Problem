@@ -23,52 +23,52 @@ public class main {
             fileList.add(file);
             decodeFile(file,i);
         }
+        System.out.println("----------------------------");
+        System.out.println("--------  贪心算法   --------");
+        for (int i = 0; i <= 70; i++) {
+            //贪心
+            GreedyAlgorithm greedy = new GreedyAlgorithm();
 
-//        System.out.p rintln("--------  贪心算法   ---------");
-//        for (int i = 0; i <= 70; i++) {
-//            //贪心
-//            GreedyAlgorithm greedy = new GreedyAlgorithm();
-//
-//            //以下为获取并输出结果的detail部分
-//            GreedyResult greedyResult = greedy.Greedy(facility[i], customer[i]);
-//            resultCostGreedy[i] = greedyResult.cost;
-//            long time=greedyResult.time;
-//            resultTimeGreedy[i] = time;
-//            System.out.println("----------------------------");
-//            System.out.println("P" + (i+1) +": 总的开销：" + greedyResult.cost);
-//            System.out.println("Status of facilities: ");
-//            for (int k=0;k<greedyResult.facilitiesStatus.length;k++){
-//                System.out.print(greedyResult.facilitiesStatus[k] + " ");
-//            }
-//            System.out.println();
-//            System.out.println("The assignment of customers to facilities: ");
-//            for (int k=0;k<greedyResult.customersToFacilities.length;k++){
-//                System.out.print(greedyResult.customersToFacilities[k] + " ");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println("----------------------------");
-//
-//        //输出Result Table csv文件
-//        createCSVFile createCSVFile = new createCSVFile();
-//        List<Result> results = new ArrayList<>();
-//        String[] header = {"","Result","Time(ms)"};
-//        String[] properties = {"id","costSum","costTime"};
-//        for (int i = 0; i <= 70; i++) {
-//            Result result = new Result();
-//            result.setId("P"+(i+1));
-//            result.setCostSum(resultCostGreedy[i]);
-//            result.setCostTime(resultTimeGreedy[i]);
-//            results.add(result);
-//        }
-//        try {
-//            createCSVFile.exportCsv("GreedyResult",header,properties,results);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
-//
+            //以下为获取并输出结果的detail部分
+            GreedyResult greedyResult = greedy.Greedy(facility[i], customer[i]);
+            resultCostGreedy[i] = greedyResult.cost;
+            long time=greedyResult.time;
+            resultTimeGreedy[i] = time;
+            System.out.println("----------------------------");
+            System.out.println("P" + (i+1) +": 总的开销：" + greedyResult.cost);
+            System.out.println("Status of facilities: ");
+            for (int k=0;k<greedyResult.facilitiesStatus.length;k++){
+                System.out.print(greedyResult.facilitiesStatus[k] + " ");
+            }
+            System.out.println();
+            System.out.println("The assignment of customers to facilities: ");
+            for (int k=0;k<greedyResult.customersToFacilities.length;k++){
+                System.out.print(greedyResult.customersToFacilities[k] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("----------------------------");
+
+        //输出Result Table csv文件
+        createCSVFile createCSVFile = new createCSVFile();
+        List<Result> results = new ArrayList<>();
+        String[] header = {"","Result","Time(ms)"};
+        String[] properties = {"id","costSum","costTime"};
+        for (int i = 0; i <= 70; i++) {
+            Result result = new Result();
+            result.setId("P"+(i+1));
+            result.setCostSum(resultCostGreedy[i]);
+            result.setCostTime(resultTimeGreedy[i]);
+            results.add(result);
+        }
+        try {
+            createCSVFile.exportCsv("GreedyResult",header,properties,results);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
 //        System.out.println("\n\n\n----------------------------");
 //        System.out.println("--------  GA算法   ---------");
 //
@@ -139,10 +139,6 @@ public class main {
 
 
         //输出Result Table csv文件
-        createCSVFile createCSVFile = new createCSVFile();
-        List<Result> results = new ArrayList<>();
-        String[] header = {"","Result","Time(ms)"};
-        String[] properties = {"id","costSum","costTime"};
         results.clear();
         for (int j = 0; j <= 70; j++) {
             Result result = new Result();
