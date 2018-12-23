@@ -69,48 +69,48 @@ public class main {
             e.printStackTrace();
         }
 
-//        System.out.println("\n\n\n----------------------------");
-//        System.out.println("--------  GA算法   ---------");
-//
-//        for(int j=0;j<=70;j++){
-//            GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
-//
-//            //以下为获取并输出结果的detail部分
-//            GAResult gaResult = geneticAlgorithm.GeneticAlgorithm(facility[j], customer[j]);
-//            resultCostGenetic[j] = gaResult.cost;
-//            resultTimeGenetic[j] = gaResult.time;
-//            System.out.println("----------------------------");
-//            System.out.println("P" + (j+1) +": 总的开销：" + gaResult.cost);
-//            System.out.println("Status of facilities: ");
-//            for (int k=0;k<gaResult.facilitiesStatus.length;k++){
-//                System.out.print(gaResult.facilitiesStatus[k] + " ");
-//            }
-//            System.out.println();
-//            System.out.println("The assignment of customers to facilities: ");
-//            for (int k=0;k<gaResult.customersToFacilities.size();k++){
-//                System.out.print(gaResult.customersToFacilities.get(k) + " ");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println("----------------------------");
-//
-//
-//        //输出Result Table csv文件
-//        results.clear();
-//        for (int j = 0; j <= 70; j++) {
-//            Result result = new Result();
-//            result.setId("P"+(j+1));
-//            result.setCostSum(resultCostGenetic[j]);
-//            result.setCostTime(resultTimeGenetic[j]);
-//            results.add(result);
-//        }
-//        try {
-//            createCSVFile.exportCsv("GAResult",header,properties,results);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
+        System.out.println("\n\n\n----------------------------");
+        System.out.println("--------  GA算法   ---------");
+
+        for(int j=0;j<=70;j++){
+            GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
+
+            //以下为获取并输出结果的detail部分
+            GAResult gaResult = geneticAlgorithm.GeneticAlgorithm(facility[j], customer[j]);
+            resultCostGenetic[j] = gaResult.cost;
+            resultTimeGenetic[j] = gaResult.time;
+            System.out.println("----------------------------");
+            System.out.println("P" + (j+1) +": 总的开销：" + gaResult.cost);
+            System.out.println("Status of facilities: ");
+            for (int k=0;k<gaResult.facilitiesStatus.length;k++){
+                System.out.print(gaResult.facilitiesStatus[k] + " ");
+            }
+            System.out.println();
+            System.out.println("The assignment of customers to facilities: ");
+            for (int k=0;k<gaResult.customersToFacilities.size();k++){
+                System.out.print(gaResult.customersToFacilities.get(k) + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("----------------------------");
+
+
+        //输出Result Table csv文件
+        results.clear();
+        for (int j = 0; j <= 70; j++) {
+            Result result = new Result();
+            result.setId("P"+(j+1));
+            result.setCostSum(resultCostGenetic[j]);
+            result.setCostTime(resultTimeGenetic[j]);
+            results.add(result);
+        }
+        try {
+            createCSVFile.exportCsv("GAResult",header,properties,results);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("\n\n\n----------------------------");
         System.out.println("--------  SA算法   ---------");
