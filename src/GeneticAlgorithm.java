@@ -10,6 +10,7 @@ public class GeneticAlgorithm {
     int talentNum = 5; //将最大适应度物种复制talentNum个
     int facilitiesCount;//facility个数
     int customersCount;//消费者个数
+    static int INVALID = 888888; //判断产生的新个体是否可存活
     int[][] facilities;
     int[][] customers;
     int whichInstance;
@@ -140,7 +141,7 @@ public class GeneticAlgorithm {
                 offspring1.add(parent2.get(i));
                 offspring2.add(parent1.get(i));
             }
-            if(calCost(offspring1)!=888888){
+            if(calCost(offspring1)!=INVALID){
                 nextGeneration.add(offspring1);
                 nextGenerationCost.add(calCost(offspring1));
             }
@@ -148,7 +149,7 @@ public class GeneticAlgorithm {
                 nextGeneration.add(parent1);
                 nextGenerationCost.add(calCost(parent1));
             }
-            if(calCost(offspring2)!=888888){
+            if(calCost(offspring2)!=INVALID){
                 nextGeneration.add(offspring2);
                 nextGenerationCost.add(calCost(offspring2));
             }
@@ -199,7 +200,7 @@ public class GeneticAlgorithm {
                 mutateOffspring = offspring;
                 //变异出错误的个体直接淘汰
                 //变异好的个体添加进种群，然后淘汰最差的个体,这样的收敛会快很多
-                if (calCost(mutateOffspring) != 888888) {
+                if (calCost(mutateOffspring) != INVALID) {
                     species.add(mutateOffspring);
                     AllCost.add(calCost(mutateOffspring));
                     calAllFitness();
@@ -271,7 +272,7 @@ public class GeneticAlgorithm {
             int toWhichFacility = individualSpecies.get(i);
             //如果出了坏种(facility的capacity超出了)，给其添上惩罚值
             if(tempFacilities[toWhichFacility][0] < 0){
-                return 888888;
+                return INVALID;
             }
             if(facilitiesStatus[toWhichFacility] == 0){
                 facilitiesStatus[toWhichFacility] = 1;
