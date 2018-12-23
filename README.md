@@ -13,7 +13,7 @@
 - GreedyAlgorithm —— 贪心算法
 - GeneticAlgorithm —— 遗传算法
 - SimulatedAnnealing —— 模拟退火算法
-- main —— 主函数（csv的输出，Detailed Solution的输出、文件的读取及解析以及对三种算法的调用）
+- main —— 主函数（`文件的读取及解析` 以及 `对三种算法的调用`、`Result Table输出至csv文件` 以及 `Detailed Solution的输出`）
 
 ---
 
