@@ -7,7 +7,7 @@ public class SimulatedAnnealing {
     int customersCount;//消费者个数`
     int[][] facilities;
     int[][] customers;
-    double Temperature = 100;//初温
+    double Temperature = 50;//初温
     double EPS=1e-6;   //温度下届
     double coolingCoefficient = 0.99;
     static int INVALID = 888888; //判断产生的新解是否可用
